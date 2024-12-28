@@ -4,6 +4,7 @@ from onnx import helper, shape_inference,TensorProto
 import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
+from onnx import version_converter
 def create_mode(inputs,nodes,outputs ):
 
     simplified_graph = helper.make_graph(
@@ -61,3 +62,15 @@ def visua_alll(model)  :
                 print(f"Adding edge: {input_name} -> {output_name}")
                 nx_graph.add_edge(input_name, output_name)
     visualize_graph(nx_graph)
+def conver_version(onnx_model):
+
+    target_opset_version = 18  # Change this to your desired opset version
+
+    # Convert the model to the specified opset version
+    converted_model = version_converter.convert_version(onnx_model, target_opset_version)
+
+    opset_version = converted_model.opset_import[0].version if len(converted_model.opset_import) > 0 else None
+    print(f"Model opset version: {opset_version}")
+    onnx.checker.check_model(converted_model)
+    onnx.checker.check_graph(converted_model.graph)
+    return

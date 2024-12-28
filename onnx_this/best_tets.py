@@ -45,13 +45,13 @@ def get_model_input():
 if __name__=='__main__':
     ses1=ort.InferenceSession("my_new_model.onnx")
     dd=onnx.load("my_new_model.onnx")
-    dd1 = onnx.load("trial88.onnx")
+    # dd1 = onnx.load("trial88.onnx")
     onnx.checker.check_model(dd)
     onnx.checker.check_graph(dd.graph)
     print("ggg")
 
     xx=ses1.run(None, get_model_input())
-    print ("hahah ",xx)
+    # print ("hahah ",xx)
     from generic_functions import visua_alll
     visua_alll(dd)
 
